@@ -1,0 +1,14 @@
+#!/bin/bash
+folder=/home/alexey/scripts/lockscreen
+revert() {
+  rm $folder/*screen*.png
+  #xset dpms 0 0 0
+}
+#trap revert HUP INT TERM
+#xset +dpms dpms 0 0 5
+#scrot -d 1 $folder/locking_screen.png
+shotgun -f png - > $folder/locking_screen.png
+convert -blur 0x8 $folder/locking_screen.png $folder/screen_blur.png
+convert -composite $folder/screen_blur.png $folder/rick2.png -gravity Center -geometry -0+410 $folder/screen.png
+i3lock -i $folder/screen.png
+revert
